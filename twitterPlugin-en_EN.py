@@ -26,13 +26,13 @@ class tweet(Plugin):
         },
     }
     
-    @register("de-DE", res['setTweet']['en-EN'])
+    @register("en-EN", res['setTweet']['en-EN'])
     def tweet_status(self, speech, language):
 		tapi = twitter.Api(consumer_key='', consumer_secret='', access_token_key='', access_token_secret='')
 		TweetString = re.match(tweet.res['setTweet'][language], speech, re.IGNORECASE)
 		answer = self.ask(u"Do you want to tweet "+TweetString.group(1)+" ?")	
 		if (answer.lower() == 'yes'):
-			self.say("OK, tweeting")
+			self.say("OK, tweeting..")
 			tweetstatus = tapi.PostUpdate(TweetString.group(1))
 			self.say('Tweet '+TweetString.group(1)+ ' successfully send.')
 		else:
