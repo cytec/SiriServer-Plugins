@@ -12,7 +12,7 @@ Requires: yelp api key
 
 [**yelpSearch**](https://github.com/cytec/SiriServer-Plugins/tree/master/yelpSearch) originally by apexad:<br />
 Description: Search for Stuff near you <br />
-Requires: [python-twitter](http://code.google.com/p/python-twitter/), [python-oauth2](https://github.com/simplegeo/python-oauth2) and [simlejason](http://pypi.python.org/pypi/simplejson) or *"easy_install python-twitter"*
+Requires: [yelp API Key](http://www.yelp.com/developers)
 
 ###German:
 
