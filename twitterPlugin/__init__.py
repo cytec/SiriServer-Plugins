@@ -24,32 +24,32 @@ class tweet(Plugin):
     res = {
         'setTweet': {
             'de-DE': 'twitter sende (.*)',
-            'en-EN': 'tweet (.*)'
+            'en-US': 'tweet (.*)'
         },
         'reallyTweet': {
             'de-DE': 'Soll ich dein Tweet senden?: ',
-            'en-EN': 'Should i post your Tweet?: '
+            'en-US': 'Should i post your Tweet?: '
         },
         'tweeted': {
             'de-DE': 'Tweet gesendet: ',
-            'en-EN': 'tweet sended: '
+            'en-US': 'tweet sended: '
         },
         'cancel': {
             'de-DE': 'Ok, du bist der Boss',
-            'en-EN': 'OK, your the boss'
+            'en-US': 'OK, your the boss'
         },
         'getUpdates': {
             'de-DE': 'twitter (updates|neues|neuigkeiten|news)',
-            'en-EN': 'twitter (updates|news|latest news)'
+            'en-US': 'twitter (updates|news|latest news)'
         },
         'fetchingUpdates': {
             'de-DE': 'Hier sind die 5 neusten tweets',
-            'en-EN': 'here are the 5 latest tweets'
+            'en-US': 'here are the 5 latest tweets'
         }
     }
     
     @register("de-DE", res['setTweet']['de-DE'])
-    @register("en-EN", res['setTweet']['en-EN'])
+    @register("en-US", res['setTweet']['en-US'])
     def tweet_status(self, speech, language):
         tapi = twitter.Api(consumer_key=cs_key, consumer_secret=cs_secret, access_token_key=ac_key, access_token_secret=ac_secret)
         TweetString = re.match(tweet.res['setTweet'][language], speech, re.IGNORECASE)
@@ -62,7 +62,7 @@ class tweet(Plugin):
         self.complete_request()
 
     @register('de-DE', res['getUpdates']['de-DE'])
-    @register('en-EN', res['getUpdates']['en-EN'])
+    @register('en-US', res['getUpdates']['en-US'])
     def twitter_updates(self, speech, language):
         tapi = twitter.Api(consumer_key=cs_key, consumer_secret=cs_secret, access_token_key=ac_key, access_token_secret=ac_secret)
         updates = tapi.GetFriendsTimeline(count=5)

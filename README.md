@@ -2,14 +2,11 @@
 
 ## cytec:
 
-
 ###Multi Language:
 
 [**twitterPlugin**](https://github.com/cytec/SiriServer-Plugins/tree/master/twitterPlugin):<br />
 Description: send tweets with siri and get last 5 tweets from timeline <br />
 Requires: [python-twitter](http://code.google.com/p/python-twitter/), [python-oauth2](https://github.com/simplegeo/python-oauth2) and [simlejason](http://pypi.python.org/pypi/simplejson) or *"easy_install python-twitter"*
-
-
 
 ###German:
 
