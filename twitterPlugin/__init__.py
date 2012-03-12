@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-#author: iamcytec@googlemail.com
+#author: cytec iamcytec@googlemail.com
 #todo: da ist noch viel möglich
 #project: SiriServer
 #Hilfe: IRC Freenode Channel: #SiriPlugins #SiriServer
@@ -17,28 +17,59 @@ cs_key = APIKeyForAPI("twitter_consumer_key")
 cs_secret = APIKeyForAPI("twitter_consumer_secret")
 ac_key = APIKeyForAPI("twitter_access_token_key")
 ac_secret = APIKeyForAPI("twitter_access_token_secret")
+twitterUser = APIKeyForAPI("twitter_username")
 
 class tweet(Plugin):
 
     res = {
         'setTweet': {
-            'de-DE': 'twitter sende (.*)'
+            'de-DE': 'twitter sende (.*)',
+            'en-EN': 'tweet (.*)'
+        },
+        'reallyTweet': {
+            'de-DE': 'Soll ich dein Tweet senden?: ',
+            'en-EN': 'Should i post your Tweet?: '
+        },
+        'tweeted': {
+            'de-DE': 'Tweet gesendet: ',
+            'en-EN': 'tweet sended: '
+        },
+        'cancel': {
+            'de-DE': 'Ok, du bist der Boss',
+            'en-EN': 'OK, your the boss'
         },
         'getUpdates': {
-            'de-DE': 'twitter updates',
-            'de-DE': 'twitter neues'
+            'de-DE': 'twitter (updates|neues|neuigkeiten|news)',
+            'en-EN': 'twitter (updates|news|latest news)'
+        },
+        'fetchingUpdates': {
+            'de-DE': 'Hier sind die 5 neusten tweets',
+            'en-EN': 'here are the 5 latest tweets'
         }
     }
     
     @register("de-DE", res['setTweet']['de-DE'])
+    @register("en-EN", res['setTweet']['en-EN'])
     def tweet_status(self, speech, language):
-		tapi = twitter.Api(consumer_key='', consumer_secret='', access_token_key='', access_token_secret='')
-		TweetString = re.match(tweet.res['setTweet'][language], speech, re.IGNORECASE)
-		answer = self.ask(u"Willst du "+TweetString.group(1)+" twittern?")	
-		if (answer.lower() == 'ja'):
-			self.say("OK, wird getwittert")
-			tweetstatus = tapi.PostUpdate(TweetString.group(1))
-			self.say('Tweet '+TweetString.group(1)+ ' gesendet.')
-		else:
-			self.say("Dann nicht!")	
-		self.complete_request()
+        tapi = twitter.Api(consumer_key=cs_key, consumer_secret=cs_secret, access_token_key=ac_key, access_token_secret=ac_secret)
+        TweetString = re.match(tweet.res['setTweet'][language], speech, re.IGNORECASE)
+        answer = self.ask(tweet.res['reallyTweet'][language] + TweetString.group(1))    
+        if answer.lower() == 'ja' or answer.lower() == 'yes' or answer.lower() == 'yeah' or answer.lower() == 'jup<':
+            tweetstatus = tapi.PostUpdate(TweetString.group(1))
+            self.say(tweet.res['tweeted'][language] + TweetString.group(1))
+        else:
+            self.say(tweet.res['cancel'][language]) 
+        self.complete_request()
+
+    @register('de-DE', res['getUpdates']['de-DE'])
+    @register('en-EN', res['getUpdates']['en-EN'])
+    def twitter_updates(self, speech, language):
+        tapi = twitter.Api(consumer_key=cs_key, consumer_secret=cs_secret, access_token_key=ac_key, access_token_secret=ac_secret)
+        updates = tapi.GetFriendsTimeline(count=5)
+        self.say(tweet.res['fetchingUpdates'][language])
+        for message in updates:
+            name = message.user.name
+            text = message.text
+            answer = name + ": " + text
+            self.say(answer, ' ')
+        self.complete_request()
