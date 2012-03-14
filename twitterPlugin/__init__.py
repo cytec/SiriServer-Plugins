@@ -4,8 +4,9 @@
 #author: cytec iamcytec@googlemail.com
 #todo: da ist noch viel möglich
 #project: SiriServer
-#Hilfe: IRC Freenode Channel: #SiriPlugins #SiriServer
-#commands: twitter sende !Nachricht!
+#commands:
+#   twitter sende !Nachricht!
+#   twitter updates
 #easy_install python-twitter
 
 from plugin import *

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-#unnützes wissen
+# author: cytec@iamcytec@googlemail.com
+# unnützes wissen / random german qoutes/fakts
 
 from plugin import *
 import urllib
