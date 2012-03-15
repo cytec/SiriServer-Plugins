@@ -24,6 +24,12 @@ class ferienPlugin(Plugin):
 		},
 		'answer': {
 			'de-DE': '{0} {1} in {2}: {3}'
+		},
+		'noferien': {
+			'de-DE': '{0} hat leider keine {1}'
+		},
+		'notfound': {
+			'de-DE': 'Ich konnte leider keine Ferien fuer {0} finden'
 		}
 	}
 
@@ -67,7 +73,6 @@ class ferienPlugin(Plugin):
 			feriengefunden = False
 			for row in allTR:
 				land, winter, ostern, pfingsten, sommer, herbst, weihnachten = row.findAll("td")
-				#print moreInfo
 				if land.text.lower() == bundesland.lower():
 					if winter.text != "-":
 						ergebnis["Winterferien"]=winter.text
@@ -85,17 +90,13 @@ class ferienPlugin(Plugin):
 			
 			if feriengefunden:
 				if ferienart == "alle":
-					#print ergebnis
 					self.say("Leider ist es momentan nicht moeglich alle ferien anzuzeigen")
 				else:
 					if ferienart in ergebnis:
-						#print ferienart, year + " in " + bundesland + ": " + ergebnis[ferienart]
 						self.say(ferienPlugin.res['answer'][language].format(ferienart, year, bundesland, ergebnis[ferienart]))
 					else: 
-						#print bundesland + " hat leider keine " + ferienart
-						self.say("{0} hat leider keine {1}").format(bundesland, ferienart)
+						self.say(ferienPlugin.res['noferien'][language].format(bundesland, ferienart))
 			else:
-				#print "Ich konnte leider keine Ferien fuer " + bundesland + " finden"
-				self.say("Ich konnte leider keine Ferien fuer {0} finden").format(bundesland)
+				self.say(ferienPlugin.res['notfound'][language].format(bundesland))
 
 
