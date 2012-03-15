@@ -90,6 +90,8 @@ class ferienPlugin(Plugin):
 			
 			if feriengefunden:
 				if ferienart == "alle":
+					for ferienart in ergebnis:
+						self.say(ferienPlugin.res['answer'][language].format(ferienart, year, bundesland, ergebnis[ferienart]))
 					self.say("Leider ist es momentan nicht moeglich alle ferien anzuzeigen")
 				else:
 					if ferienart in ergebnis:
