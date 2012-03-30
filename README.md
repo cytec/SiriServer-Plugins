@@ -33,3 +33,7 @@ Requires: [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/) or <cod
 Description: Ferientermine für Bundesländer <br>
 bsp: "Sommerferien in Hessen" zeigt die Sommerferien für das aktuelle Jahr im Bundesland Hessen<br />
 Requires: [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/) or <code>easy_install BeautifulSoup</code>"
+
+[**stau**](https://github.com/cytec/SiriServer-Plugins/tree/master/stau)<br />
+Description: Aktuelle Staumeldungen für Deutschland <br>
+bsp: "Stau auf der A5" zeigt die Staumeldungen für die A5<br />

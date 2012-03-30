@@ -14,7 +14,7 @@ class ferienPlugin(Plugin):
 
 	res = {
 		'feriencommands': {
-			'de-DE': '.*ferien in ([\w ]+)'
+			'de-DE': '(?P<art>.*ferien) in (?P<bland>[\w ]+)'
 		},
 		'searching': {
 			'de-DE': 'Einen moment bitte...'
@@ -34,7 +34,7 @@ class ferienPlugin(Plugin):
 	}
 
 	@register("de-DE", res["feriencommands"]["de-DE"])
-	def get_ferien(self, speech, language):
+	def get_ferien(self, speech, language, matchedRegex):
 		self.say(ferienPlugin.res['searching'][language])
 		bundesland = re.match("(?u).* in ([\w ]+)$", speech, re.IGNORECASE)
 		ferienart = re.match("([\w ]+).* in .*", speech, re.IGNORECASE)
@@ -77,7 +77,7 @@ class ferienPlugin(Plugin):
 					if winter.text != "-":
 						ergebnis["Winterferien"]=winter.text
 					if ostern.text != "-":
-						ergebnis["Osterferien"]=ostern.text
+						ergebnis["Osterferien"]=ostern.text.replace('-','bis')
 					if pfingsten.text != "-":
 						ergebnis["Pfingstferien"]=pfingsten.text
 					if sommer.text != "-":
@@ -92,7 +92,7 @@ class ferienPlugin(Plugin):
 				if ferienart == "alle":
 					for ferienart in ergebnis:
 						self.say(ferienPlugin.res['answer'][language].format(ferienart, year, bundesland, ergebnis[ferienart]))
-					self.say("Leider ist es momentan nicht moeglich alle ferien anzuzeigen")
+					#self.say("Leider ist es momentan nicht moeglich alle ferien anzuzeigen")
 				else:
 					if ferienart in ergebnis:
 						self.say(ferienPlugin.res['answer'][language].format(ferienart, year, bundesland, ergebnis[ferienart]))
